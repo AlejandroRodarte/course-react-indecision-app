@@ -7,6 +7,6 @@ const template = React.createElement("h1", {
 
 const appRoot = document.getElementById('app');
 
-// render template with ReactDOM
+// render template with the ReactDOM
 // two arguments: the JSX template itself and where will it be located (app root div)
 ReactDOM.render(template, appRoot);
