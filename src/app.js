@@ -1,13 +1,7 @@
-'use strict';
-
 // JSX: JavaScript XML -> JavaScript syntax extension
-var template = React.createElement(
-  'h1',
-  null,
-  'Does this change?'
-);
+const template = <h1>Does this change?</h1>;
 
-var appRoot = document.getElementById('app');
+const appRoot = document.getElementById('app');
 
 // render template with the ReactDOM
 // two arguments: the JSX template itself and where will it be located (app root div)
