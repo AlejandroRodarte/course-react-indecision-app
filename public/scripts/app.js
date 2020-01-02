@@ -1,5 +1,10 @@
 'use strict';
 
+var app = {
+    title: 'Indecision App',
+    subtitle: 'Put your life in the hands of a computer'
+};
+
 // JSX: JavaScript XML -> JavaScript syntax extension
 var template = React.createElement(
     'div',
@@ -7,12 +12,12 @@ var template = React.createElement(
     React.createElement(
         'h1',
         null,
-        'Does this change?'
+        app.title
     ),
     React.createElement(
         'p',
         null,
-        'This is some info'
+        app.subtitle
     ),
     React.createElement(
         'ol',
@@ -30,23 +35,43 @@ var template = React.createElement(
     )
 );
 
+// string variable
+var username = 'Alejandro Rodarte';
+
+// numeric variable
+var age = 24;
+
+// another string variable
+var userLocation = 'Ciudad Juarez';
+
+// object
+var user = {
+    name: 'Alejandro Rodarte',
+    age: 24,
+    location: 'Ciudad Juarez'
+};
+
+// use regular brackets to inject dynamic data into the template
+// javascript expressions are allowed inside
 var templateTwo = React.createElement(
     'div',
     null,
     React.createElement(
         'h1',
         null,
-        'Alejandro Rodarte'
+        user.name
     ),
     React.createElement(
         'p',
         null,
-        'Age: 24'
+        'Age: ',
+        user.age
     ),
     React.createElement(
         'p',
         null,
-        'Location: Ciudad Juarez'
+        'Location: ',
+        user.location
     )
 );
 
@@ -54,4 +79,4 @@ var appRoot = document.getElementById('app');
 
 // render template with the ReactDOM
 // two arguments: the JSX template itself and where will it be located (app root div)
-ReactDOM.render(templateTwo, appRoot);
+ReactDOM.render(template, appRoot);

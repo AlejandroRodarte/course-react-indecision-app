@@ -1,12 +1,17 @@
+const app = {
+    title: 'Indecision App',
+    subtitle: 'Put your life in the hands of a computer'
+};
+
 // JSX: JavaScript XML -> JavaScript syntax extension
 const template = (
     <div>
         <h1>
-            Does this change?
+            { app.title }
         </h1> 
         
         <p>
-            This is some info
+            { app.subtitle }
         </p>
 
         <ol>
@@ -20,18 +25,36 @@ const template = (
     </div>
 );
 
+// string variable
+const username = 'Alejandro Rodarte';
+
+// numeric variable
+const age = 24;
+
+// another string variable
+const userLocation = 'Ciudad Juarez';
+
+// object
+const user = {
+    name: 'Alejandro Rodarte',
+    age: 24,
+    location: 'Ciudad Juarez'
+};
+
+// use regular brackets to inject dynamic data into the template
+// javascript expressions are allowed inside
 const templateTwo = (
     <div>
         <h1>
-            Alejandro Rodarte
+            { user.name }
         </h1>
 
         <p>
-            Age: 24
+            Age: { user.age }
         </p>
 
         <p>
-            Location: Ciudad Juarez
+            Location: { user.location }
         </p>
     </div>
 );
@@ -40,4 +63,4 @@ const appRoot = document.getElementById('app');
 
 // render template with the ReactDOM
 // two arguments: the JSX template itself and where will it be located (app root div)
-ReactDOM.render(templateTwo, appRoot);
+ReactDOM.render(template, appRoot);
