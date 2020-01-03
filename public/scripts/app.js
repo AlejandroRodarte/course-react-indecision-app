@@ -2,7 +2,8 @@
 
 var app = {
     title: 'Indecision App',
-    subtitle: 'Put your life in the hands of a computer'
+    subtitle: 'Put your life in the hands of a computer',
+    options: ['One', 'Two']
 };
 
 // JSX: JavaScript XML -> JavaScript syntax extension
@@ -14,10 +15,15 @@ var template = React.createElement(
         null,
         app.title
     ),
-    React.createElement(
+    app.subtitle && React.createElement(
         'p',
         null,
         app.subtitle
+    ),
+    React.createElement(
+        'p',
+        null,
+        app.options.length > 0 ? 'Here are your options' : 'No options'
     ),
     React.createElement(
         'ol',
@@ -35,15 +41,6 @@ var template = React.createElement(
     )
 );
 
-// string variable
-var username = 'Alejandro Rodarte';
-
-// numeric variable
-var age = 24;
-
-// another string variable
-var userLocation = 'Ciudad Juarez';
-
 // object
 var user = {
     name: 'Alejandro Rodarte',
@@ -51,28 +48,40 @@ var user = {
     location: 'Ciudad Juarez'
 };
 
+// function to call in our JSX
+// functions can actually return JSX code with the embedded location
+function getLocation(location) {
+    return location ? React.createElement(
+        'p',
+        null,
+        'Location: ',
+        location
+    ) : undefined;
+}
+
 // use regular brackets to inject dynamic data into the template
 // javascript expressions are allowed inside
+// we can also call functions inside the JSX
+
+// getLocation call can now return JSX code
+// if the JSX function returns undefined, nothing will be rendered on the DOM
+
+// booleans and null values are ignored by JSX since they are used by conditional rendering
 var templateTwo = React.createElement(
     'div',
     null,
     React.createElement(
         'h1',
         null,
-        user.name
+        user.name ? user.name : 'Anonymous'
     ),
-    React.createElement(
+    user.age && user.age >= 18 && React.createElement(
         'p',
         null,
         'Age: ',
         user.age
     ),
-    React.createElement(
-        'p',
-        null,
-        'Location: ',
-        user.location
-    )
+    getLocation(user.location)
 );
 
 var appRoot = document.getElementById('app');

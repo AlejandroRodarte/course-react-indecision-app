@@ -5,6 +5,10 @@
   "repository": "https://github.com/AlejandroRodarte/rodarte-indecision-app.git",
   "author": "Alejandro Rodarte <alejandrorodarte1@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "serve": "live-server public"
+  },
   "dependencies": {
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1"
