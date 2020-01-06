@@ -1,3 +1,19 @@
+// nesting react component: parent component renders children react components
+class IndecisionApp extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <Header />
+                <Action />
+                <Options />
+                <AddOption />
+            </div>
+        );
+    }
+
+}
+
 // convert and ES6 regular class into a react component class
 class Header extends React.Component {
 
@@ -31,12 +47,25 @@ class Action extends React.Component {
 
 }
 
+class Option extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <p>Option component here</p>
+            </div>
+        );
+    }
+
+}
+
 class Options extends React.Component {
 
     render() {
         return (
             <div>
-                <p>Options component here</p>
+                <Option />
+                <Option />
             </div>
         );
     }
@@ -55,17 +84,4 @@ class AddOption extends React.Component {
 
 }
 
-// JSX: <Header/> as custom HTML element to place a React component into the DOM
-const jsx = (
-    <div>
-        <h1>
-            Title
-        </h1>
-        <Header />
-        <Action />
-        <Options />
-        <AddOption />
-    </div>
-);
-
-ReactDOM.render(jsx, document.getElementById('app'));
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
