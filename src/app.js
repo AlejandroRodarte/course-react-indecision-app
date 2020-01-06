@@ -71,8 +71,14 @@ class Option extends React.Component {
 
 class Options extends React.Component {
 
+    // overriding the constructor to never lose the `this` binding
+    constructor(props) {
+        super(props);
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
+
     handleRemoveAll() {
-        alert('handleRemoveAll');
+        console.log(this.props.options);
     }
 
     render() {
