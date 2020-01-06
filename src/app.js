@@ -28,41 +28,50 @@ const template = (
     </div>
 );
 
-// object
-const user = {
-    name: 'Alejandro Rodarte',
-    age: 24,
-    location: 'Ciudad Juarez'
+let count = 0;
+const someId = 'my-id-here';
+
+const addOne = () => {
+    console.log('add one');    
 };
 
-// function to call in our JSX
-// functions can actually return JSX code with the embedded location
-function getLocation(location) {
-    return location ? <p>Location: { location }</p> : undefined;
-}
+const minusOne = () => {
+    console.log('minus one');
+};
 
-// use regular brackets to inject dynamic data into the template
-// javascript expressions are allowed inside
-// we can also call functions inside the JSX
+const reset = () => {
+    console.log('reset');
+};
 
-// getLocation call can now return JSX code
-// if the JSX function returns undefined, nothing will be rendered on the DOM
+// JSX elements can have regular HTML attributes, however, some change like 'class' which changes
+// to 'className' since it is a reserved keyword
 
-// booleans and null values are ignored by JSX since they are used by conditional rendering
+// HTML attributes can be dynamic and receive a javascript expression
+
+// onClick is a custom React attribute which can accept a function expression
 const templateTwo = (
     <div>
         <h1>
-            { user.name ? user.name : 'Anonymous' }
+            Count: { count }
         </h1>
-
-        { (user.age && user.age >= 18) && <p>Age: { user.age }</p> }
-
-        { getLocation(user.location) }
+        <button id={ someId } 
+                className="button"
+                onClick={ addOne }>
+            +1
+        </button>
+        <button onClick={ minusOne }>
+            -1
+        </button>
+        <button onClick={ reset }>
+            Reset
+        </button>
     </div>
 );
+
+console.log(templateTwo);
 
 const appRoot = document.getElementById('app');
 
 // render template with the ReactDOM
 // two arguments: the JSX template itself and where will it be located (app root div)
-ReactDOM.render(template, appRoot);
+ReactDOM.render(templateTwo, appRoot);
