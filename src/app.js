@@ -1,85 +1,71 @@
-const app = {
-    title: 'Indecision App',
-    subtitle: 'Put your life in the hands of a computer',
-    options: []
-};
+// convert and ES6 regular class into a react component class
+class Header extends React.Component {
 
-// form submission handler
-const onFormSubmit = (e) => {
-
-    e.preventDefault();
-
-    // e.target: get event target element (form)
-    // elements: get form elements
-    // option: get input with name 'option'
-    // value: get input value of the 'option' input
-    const option = e.target.elements.option.value;
-
-    // option was provided: push into object array and clear input
-    // also, re-render
-    if (option) {
-        app.options.push(option);
-        e.target.elements.option.value = '';
-        renderOptionsApp();
+    // required method: what to render? must return some JSX
+    render() {
+        return (
+            <div>
+                <h1>
+                    Indecision
+                </h1>
+                <h2>
+                    Put your life in the hands of a computer
+                </h2>
+            </div>
+        );
     }
 
-};
+}
 
-// remove all options click event handler
-const onRemoveAll = () => {
-    app.options = [];
-    renderOptionsApp();
-};
+class Action extends React.Component {
 
-const onMakeDecision = () => {
-    alert(app.options[Math.floor(Math.random() * app.options.length)]);
-};
-
-const appRoot = document.getElementById('app');
-
-const numbers = [55, 101, 1000];
-
-const renderOptionsApp = () => {
-
-    const template = (
-        <div>
-            <h1>
-                { app.title }
-            </h1> 
-            
-            { app.subtitle && <p>{ app.subtitle }</p> }
-    
-            <p>
-                { app.options.length > 0 ? 'Here are your options' : 'No options' }
-            </p>
-    
-            <button onClick={ onMakeDecision }
-                    disabled={ app.options.length === 0 }>
-                What should I do?
-            </button>
-
-            <button type="button" onClick={ onRemoveAll }>
-                Remove All
-            </button>
-    
-            <ol>
-                {
-                    app.options.map(option => <li key={ option }> { option } </li>)
-                }
-            </ol>
-    
-            <form onSubmit={ onFormSubmit }>
-                <input type="text" name="option"/>
-    
+    render() {
+        return (
+            <div>
                 <button>
-                    Add Option
+                    What should I do?
                 </button>
-            </form>
-        </div>
-    );
+            </div>
+        );
+    }
 
-    ReactDOM.render(template, appRoot);
+}
 
-};
+class Options extends React.Component {
 
-renderOptionsApp();
+    render() {
+        return (
+            <div>
+                <p>Options component here</p>
+            </div>
+        );
+    }
+
+}
+
+class AddOption extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <p>AddOption component here</p>
+            </div>
+        );
+    }
+
+}
+
+// JSX: <Header/> as custom HTML element to place a React component into the DOM
+const jsx = (
+    <div>
+        <h1>
+            Title
+        </h1>
+        <Header />
+        <Action />
+        <Options />
+        <AddOption />
+    </div>
+);
+
+ReactDOM.render(jsx, document.getElementById('app'));
