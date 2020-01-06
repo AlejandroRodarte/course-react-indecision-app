@@ -31,6 +31,10 @@ const onRemoveAll = () => {
     renderOptionsApp();
 };
 
+const onMakeDecision = () => {
+    alert(app.options[Math.floor(Math.random() * app.options.length)]);
+};
+
 const appRoot = document.getElementById('app');
 
 const numbers = [55, 101, 1000];
@@ -49,9 +53,10 @@ const renderOptionsApp = () => {
                 { app.options.length > 0 ? 'Here are your options' : 'No options' }
             </p>
     
-            <p>
-                { app.options.length }
-            </p>
+            <button onClick={ onMakeDecision }
+                    disabled={ app.options.length === 0 }>
+                What should I do?
+            </button>
 
             <button type="button" onClick={ onRemoveAll }>
                 Remove All
