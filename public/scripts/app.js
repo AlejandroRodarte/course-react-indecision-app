@@ -3,108 +3,94 @@
 var app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
-    options: ['One', 'Two']
+    options: []
 };
 
-// JSX: JavaScript XML -> JavaScript syntax extension
-var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        app.title
-    ),
-    app.subtitle && React.createElement(
-        'p',
-        null,
-        app.subtitle
-    ),
-    React.createElement(
-        'p',
-        null,
-        app.options.length > 0 ? 'Here are your options' : 'No options'
-    ),
-    React.createElement(
-        'ol',
-        null,
-        React.createElement(
-            'li',
-            null,
-            'Item one'
-        ),
-        React.createElement(
-            'li',
-            null,
-            'Item two'
-        )
-    )
-);
+// form submission handler
+var onFormSubmit = function onFormSubmit(e) {
 
-var count = 0;
-var someId = 'my-id-here';
+    e.preventDefault();
 
-// add one and render whole template again
-var addOne = function addOne() {
-    count++;
-    renderCounterApp();
+    // e.target: get event target element (form)
+    // elements: get form elements
+    // option: get input with name 'option'
+    // value: get input value of the 'option' input
+    var option = e.target.elements.option.value;
+
+    // option was provided: push into object array and clear input
+    // also, re-render
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        renderOptionsApp();
+    }
 };
 
-// subtract one and render whole template again
-var minusOne = function minusOne() {
-    count--;
-    renderCounterApp();
-};
-
-// reset counter and render whole template again
-var reset = function reset() {
-    count = 0;
-    renderCounterApp();
+// remove all options click event handler
+var onRemoveAll = function onRemoveAll() {
+    app.options = [];
+    renderOptionsApp();
 };
 
 var appRoot = document.getElementById('app');
 
-// render the app; define template and render
-var renderCounterApp = function renderCounterApp() {
+var renderOptionsApp = function renderOptionsApp() {
 
-    // JSX elements can have regular HTML attributes, however, some change like 'class' which changes
-    // to 'className' since it is a reserved keyword
-
-    // HTML attributes can be dynamic and receive a javascript expression
-
-    // onClick is a custom React attribute which can accept a function expression
-    var templateTwo = React.createElement(
+    var template = React.createElement(
         'div',
         null,
         React.createElement(
             'h1',
             null,
-            'Count: ',
-            count
+            app.title
+        ),
+        app.subtitle && React.createElement(
+            'p',
+            null,
+            app.subtitle
+        ),
+        React.createElement(
+            'p',
+            null,
+            app.options.length > 0 ? 'Here are your options' : 'No options'
+        ),
+        React.createElement(
+            'p',
+            null,
+            app.options.length
         ),
         React.createElement(
             'button',
-            { id: someId,
-                className: 'button',
-                onClick: addOne },
-            '+1'
+            { type: 'button', onClick: onRemoveAll },
+            'Remove All'
         ),
         React.createElement(
-            'button',
-            { onClick: minusOne },
-            '-1'
+            'ol',
+            null,
+            React.createElement(
+                'li',
+                null,
+                'Item one'
+            ),
+            React.createElement(
+                'li',
+                null,
+                'Item two'
+            )
         ),
         React.createElement(
-            'button',
-            { onClick: reset },
-            'Reset'
+            'form',
+            { onSubmit: onFormSubmit },
+            React.createElement('input', { type: 'text', name: 'option' }),
+            React.createElement(
+                'button',
+                null,
+                'Add Option'
+            )
         )
     );
 
-    // render template with the ReactDOM
-    // two arguments: the JSX template itself and where will it be located (app root div)
-    ReactDOM.render(templateTwo, appRoot);
+    ReactDOM.render(template, appRoot);
 };
 
-// initialize template
-renderCounterApp();
+renderOptionsApp();

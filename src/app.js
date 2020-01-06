@@ -1,89 +1,81 @@
 const app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
-    options: ['One', 'Two']
+    options: []
 };
 
-// JSX: JavaScript XML -> JavaScript syntax extension
-const template = (
-    <div>
-        <h1>
-            { app.title }
-        </h1> 
-        
-        { app.subtitle && <p>{ app.subtitle }</p> }
+// form submission handler
+const onFormSubmit = (e) => {
 
-        <p>
-            { app.options.length > 0 ? 'Here are your options' : 'No options' }
-        </p>
+    e.preventDefault();
 
-        <ol>
-            <li>
-                Item one
-            </li>
-            <li>
-                Item two
-            </li>
-        </ol>
-    </div>
-);
+    // e.target: get event target element (form)
+    // elements: get form elements
+    // option: get input with name 'option'
+    // value: get input value of the 'option' input
+    const option = e.target.elements.option.value;
 
-let count = 0;
-const someId = 'my-id-here';
+    // option was provided: push into object array and clear input
+    // also, re-render
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        renderOptionsApp();
+    }
 
-// add one and render whole template again
-const addOne = () => {
-    count++;
-    renderCounterApp(); 
 };
 
-// subtract one and render whole template again
-const minusOne = () => {
-    count--;
-    renderCounterApp();
-};
-
-// reset counter and render whole template again
-const reset = () => {
-    count = 0;
-    renderCounterApp();
+// remove all options click event handler
+const onRemoveAll = () => {
+    app.options = [];
+    renderOptionsApp();
 };
 
 const appRoot = document.getElementById('app');
 
-// render the app; define template and render
-const renderCounterApp = () => {
+const renderOptionsApp = () => {
 
-    // JSX elements can have regular HTML attributes, however, some change like 'class' which changes
-    // to 'className' since it is a reserved keyword
-
-    // HTML attributes can be dynamic and receive a javascript expression
-
-    // onClick is a custom React attribute which can accept a function expression
-    const templateTwo = (
+    const template = (
         <div>
             <h1>
-                Count: { count }
-            </h1>
-            <button id={ someId } 
-                    className="button"
-                    onClick={ addOne }>
-                +1
+                { app.title }
+            </h1> 
+            
+            { app.subtitle && <p>{ app.subtitle }</p> }
+    
+            <p>
+                { app.options.length > 0 ? 'Here are your options' : 'No options' }
+            </p>
+    
+            <p>
+                { app.options.length }
+            </p>
+
+            <button type="button" onClick={ onRemoveAll }>
+                Remove All
             </button>
-            <button onClick={ minusOne }>
-                -1
-            </button>
-            <button onClick={ reset }>
-                Reset
-            </button>
+    
+            <ol>
+                <li>
+                    Item one
+                </li>
+                <li>
+                    Item two
+                </li>
+            </ol>
+    
+            <form onSubmit={ onFormSubmit }>
+                <input type="text" name="option"/>
+    
+                <button>
+                    Add Option
+                </button>
+            </form>
         </div>
     );
 
-    // render template with the ReactDOM
-    // two arguments: the JSX template itself and where will it be located (app root div)
-    ReactDOM.render(templateTwo, appRoot);
+    ReactDOM.render(template, appRoot);
 
 };
 
-// initialize template
-renderCounterApp();
+renderOptionsApp();
