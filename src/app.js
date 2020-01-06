@@ -79,72 +79,52 @@ class IndecisionApp extends React.Component {
 
 }
 
-// convert and ES6 regular class into a react component class
-class Header extends React.Component {
-
-    // required method: what to render? must return some JSX
-    render() {
-        return (
-            <div>
-                <h1>
-                    { this.props.title }
-                </h1>
-                <h2>
-                    { this.props.subtitle }
-                </h2>
-            </div>
-        );
-    }
-
+const Header = (props) => {
+    return (
+        <div>
+            <h1>
+                { props.title }
+            </h1>
+            <h2>
+                { props.subtitle }
+            </h2>
+        </div>
+    );
 }
 
-class Action extends React.Component {
+const Action = (props) => {
+    return (
+        <div>
+            <button 
+                onClick={ props.handlePick }
+                disabled={ !props.hasOptions }
+            >
+                What should I do?
+            </button>
+        </div>
+    ); 
+};
 
-    render() {
-        return (
-            <div>
-                <button 
-                    onClick={ this.props.handlePick }
-                    disabled={ !this.props.hasOptions }
-                >
-                    What should I do?
-                </button>
-            </div>
-        );
-    }
-
+const Option = (props) => {
+    return (
+        <div>
+            <p> { props.optionText } </p>
+        </div>
+    );
 }
 
-class Option extends React.Component {
-
-    render() {
-        return (
-            <div>
-                <p> { this.props.optionText } </p>
-            </div>
-        );
-    }
-
-}
-
-class Options extends React.Component {
-
-    // the child component will use the function referenced passed by the parent
-    // to emit events (similar to Angular) and update data
-    render() {
-        return (
-            <div>
-                <button onClick={ this.props.handleDeleteOptions }>
-                    Remove all
-                </button>
-                {
-                    this.props.options.map((option, index) => <Option key={ index } optionText={ option } />)
-                }
-            </div>
-        );
-    }
-
-}
+const Options = (props) => {
+    return (
+        <div>
+            <button onClick={ props.handleDeleteOptions }>
+                Remove all
+            </button>
+            {
+                props.options.map((option, index) => <Option key={ index } optionText={ option } />)
+            }
+        </div>
+    );
+};
 
 class AddOption extends React.Component {
 
@@ -197,5 +177,19 @@ class AddOption extends React.Component {
     }
 
 }
+
+// stateless functional component syntax
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>
+//                 Name: { props.name }
+//             </p>
+//             <p>
+//                 Age: { props.age }
+//             </p>
+//         </div>
+//     );
+// };
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
