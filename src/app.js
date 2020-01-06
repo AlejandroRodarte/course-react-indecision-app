@@ -18,12 +18,19 @@ class IndecisionApp extends React.Component {
 
     // ngOnInit
     componentDidMount() {
-        console.log('componentDidMount');
+        try {
+            const options = JSON.parse(localStorage.getItem('options')) || this.props.options;
+            this.setState(() => ({ options }));
+        } catch (e) {
+            // noop
+        }
     }
 
     // ngOnChanges
     componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate');
+        if (this.state.options.length - prevState.options.length !== 0) {
+            localStorage.setItem('options', JSON.stringify(this.state.options));
+        }
     }
 
     // ngOnDestroy
@@ -142,6 +149,9 @@ const Options = (props) => {
             <button onClick={ props.handleDeleteOptions }>
                 Remove all
             </button>
+
+            { props.options.length === 0 && <p> Please add an option to get started </p> }
+
             {
                 props.options.map((option, index) => (
                     <Option 
@@ -178,7 +188,9 @@ class AddOption extends React.Component {
         // accessing the error (if exists, else undefined)
         const error = this.props.handleAddOption(option);
 
-        e.target.elements.option.value = '';
+        if (!error) {
+            e.target.elements.option.value = '';
+        }
 
         // set the returned error
         this.setState(() => ({ error }));

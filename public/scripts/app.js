@@ -35,7 +35,13 @@ var IndecisionApp = function (_React$Component) {
     _createClass(IndecisionApp, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('componentDidMount');
+
+            try {
+                var options = JSON.parse(localStorage.getItem('options')) || this.props.options;
+                this.setState(function () {
+                    return { options: options };
+                });
+            } catch (e) {}
         }
 
         // ngOnChanges
@@ -43,7 +49,10 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
-            console.log('componentDidUpdate');
+
+            if (this.state.options.length - prevState.options.length !== 0) {
+                localStorage.setItem('options', JSON.stringify(this.state.options));
+            }
         }
 
         // ngOnDestroy
@@ -197,6 +206,11 @@ var Options = function Options(props) {
             { onClick: props.handleDeleteOptions },
             'Remove all'
         ),
+        props.options.length === 0 && React.createElement(
+            'p',
+            null,
+            ' Please add an option to get started '
+        ),
         props.options.map(function (option, index) {
             return React.createElement(Option, {
                 key: index,
@@ -235,7 +249,9 @@ var AddOption = function (_React$Component2) {
             // accessing the error (if exists, else undefined)
             var error = this.props.handleAddOption(option);
 
-            e.target.elements.option.value = '';
+            if (!error) {
+                e.target.elements.option.value = '';
+            }
 
             // set the returned error
             this.setState(function () {
