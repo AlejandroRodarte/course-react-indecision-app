@@ -1,18 +1,54 @@
 // nesting react component: parent component renders children react components
 class IndecisionApp extends React.Component {
 
+    constructor(props) {
+
+        super(props);
+
+        this.state = {
+            options: ['Thing one', 'Thing two', 'Thing four']
+        }
+
+        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handlePick = this.handlePick.bind(this);
+
+    }
+
+    handleDeleteOptions() {
+        this.setState(() => {
+            return {
+                options: []
+            }
+        })
+    };
+
+    handlePick() {
+        alert(this.state.options[Math.floor(Math.random() * this.state.options.length)]);
+    }
+
     render() {
 
         const title = 'Indecision';
         const subtitle = 'Put your life in the hands of a computer';
-        const options = ['Thing one', 'Thing two', 'Thing four'];
 
+        // for children to manipulate parent data (upstream flow) pass down functions as regular props
         return (
             <div>
+
                 <Header title={ title } subtitle={ subtitle } />
-                <Action />
-                <Options options={ options }/>
+
+                <Action 
+                    hasOptions={ this.state.options.length > 0 }
+                    handlePick={ this.handlePick }
+                />
+
+                <Options 
+                    options={ this.state.options }
+                    handleDeleteOptions={ this.handleDeleteOptions }
+                />
+                
                 <AddOption />
+
             </div>
         );
 
@@ -41,14 +77,13 @@ class Header extends React.Component {
 
 class Action extends React.Component {
 
-    handlePick() {
-        alert('handlePick');
-    }
-
     render() {
         return (
             <div>
-                <button onClick={ this.handlePick }>
+                <button 
+                    onClick={ this.props.handlePick }
+                    disabled={ !this.props.hasOptions }
+                >
                     What should I do?
                 </button>
             </div>
@@ -71,20 +106,12 @@ class Option extends React.Component {
 
 class Options extends React.Component {
 
-    // overriding the constructor to never lose the `this` binding
-    constructor(props) {
-        super(props);
-        this.handleRemoveAll = this.handleRemoveAll.bind(this);
-    }
-
-    handleRemoveAll() {
-        console.log(this.props.options);
-    }
-
+    // the child component will use the function referenced passed by the parent
+    // to emit events (similar to Angular) and update data
     render() {
         return (
             <div>
-                <button onClick={ this.handleRemoveAll }>
+                <button onClick={ this.props.handleDeleteOptions }>
                     Remove all
                 </button>
                 {
