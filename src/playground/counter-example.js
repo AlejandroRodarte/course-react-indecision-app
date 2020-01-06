@@ -1,6 +1,8 @@
 let count = 0;
 const someId = 'my-id-here';
 
+const appRoot = document.getElementById('app');
+
 // add one and render whole template again
 const addOne = () => {
     count++;
