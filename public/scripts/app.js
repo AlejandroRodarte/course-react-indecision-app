@@ -44,56 +44,67 @@ var template = React.createElement(
 var count = 0;
 var someId = 'my-id-here';
 
+// add one and render whole template again
 var addOne = function addOne() {
-    console.log('add one');
+    count++;
+    renderCounterApp();
 };
 
+// subtract one and render whole template again
 var minusOne = function minusOne() {
-    console.log('minus one');
+    count--;
+    renderCounterApp();
 };
 
+// reset counter and render whole template again
 var reset = function reset() {
-    console.log('reset');
+    count = 0;
+    renderCounterApp();
 };
-
-// JSX elements can have regular HTML attributes, however, some change like 'class' which changes
-// to 'className' since it is a reserved keyword
-
-// HTML attributes can be dynamic and receive a javascript expression
-
-// onClick is a custom React attribute which can accept a function expression
-var templateTwo = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        'Count: ',
-        count
-    ),
-    React.createElement(
-        'button',
-        { id: someId,
-            className: 'button',
-            onClick: addOne },
-        '+1'
-    ),
-    React.createElement(
-        'button',
-        { onClick: minusOne },
-        '-1'
-    ),
-    React.createElement(
-        'button',
-        { onClick: reset },
-        'Reset'
-    )
-);
-
-console.log(templateTwo);
 
 var appRoot = document.getElementById('app');
 
-// render template with the ReactDOM
-// two arguments: the JSX template itself and where will it be located (app root div)
-ReactDOM.render(templateTwo, appRoot);
+// render the app; define template and render
+var renderCounterApp = function renderCounterApp() {
+
+    // JSX elements can have regular HTML attributes, however, some change like 'class' which changes
+    // to 'className' since it is a reserved keyword
+
+    // HTML attributes can be dynamic and receive a javascript expression
+
+    // onClick is a custom React attribute which can accept a function expression
+    var templateTwo = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            'Count: ',
+            count
+        ),
+        React.createElement(
+            'button',
+            { id: someId,
+                className: 'button',
+                onClick: addOne },
+            '+1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: minusOne },
+            '-1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: reset },
+            'Reset'
+        )
+    );
+
+    // render template with the ReactDOM
+    // two arguments: the JSX template itself and where will it be located (app root div)
+    ReactDOM.render(templateTwo, appRoot);
+};
+
+// initialize template
+renderCounterApp();
