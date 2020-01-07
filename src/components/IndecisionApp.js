@@ -5,25 +5,36 @@ import Header from './Header';
 import Action from './Action';
 import Options from './Options';
 
-// nesting react component: parent component renders children react components
 export default class IndecisionApp extends React.Component {
 
-    constructor(props) {
+    state = {
+        options: []
+    };
 
-        super(props);
+    handleDeleteOptions = () => {
+        this.setState(() => ({ options: [] }));
+    };
 
-        this.state = {
-            options: []
+    handleDeleteOption = (option) => {
+        this.setState((prevState) => ({ options: prevState.options.filter(value => option !== value) }))
+    }
+
+    handlePick = () => {
+        alert(this.state.options[Math.floor(Math.random() * this.state.options.length)]);
+    }
+
+    handleAddOption = (option) => {
+
+        if (!option) {
+            return 'Enter valid value to add item';
+        } else if (this.state.options.indexOf(option) !== -1) {
+            return 'This option already exists';
         }
 
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
+        this.setState((prevState) => ({ options: prevState.options.concat([option]) }));
 
     }
 
-    // ngOnInit
     componentDidMount() {
         try {
             const options = JSON.parse(localStorage.getItem('options')) || [];
@@ -33,51 +44,20 @@ export default class IndecisionApp extends React.Component {
         }
     }
 
-    // ngOnChanges
     componentDidUpdate(prevProps, prevState) {
         if (this.state.options.length - prevState.options.length !== 0) {
             localStorage.setItem('options', JSON.stringify(this.state.options));
         }
     }
 
-    // ngOnDestroy
     componentWillUnmount() {
         console.log('componentWillUnmount');
-    }
-
-    handleDeleteOptions() {
-        this.setState(() => ({ options: [] }));
-    };
-
-    handleDeleteOption(option) {
-        this.setState((prevState) => ({ options: prevState.options.filter(value => option !== value) }))
-    }
-
-    handlePick() {
-        alert(this.state.options[Math.floor(Math.random() * this.state.options.length)]);
-    }
-
-    // we should NEVER mutate (modify) directly the state, so we use concat() instead of push() since
-    // it returns a new array
-    handleAddOption(option) {
-
-        // returning string to the child if there is a problem
-        if (!option) {
-            return 'Enter valid value to add item';
-        } else if (this.state.options.indexOf(option) !== -1) {
-            return 'This option already exists';
-        }
-
-        // if no error, function returns undefined
-        this.setState((prevState) => ({ options: prevState.options.concat([option]) }));
-
     }
 
     render() {
 
         const subtitle = 'Put your life in the hands of a computer';
 
-        // for children to manipulate parent data (upstream flow) pass down functions as regular props
         return (
             <div>
 
