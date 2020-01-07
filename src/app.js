@@ -19,7 +19,7 @@ class IndecisionApp extends React.Component {
     // ngOnInit
     componentDidMount() {
         try {
-            const options = JSON.parse(localStorage.getItem('options')) || this.props.options;
+            const options = JSON.parse(localStorage.getItem('options')) || [];
             this.setState(() => ({ options }));
         } catch (e) {
             // noop
