@@ -1,18 +1,13 @@
-// named import
-import subtract, { square, add } from './utils';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import isSenior, { isAdult, canDrink } from './person';
+// const template = (
+//     <div>
+//         <p>
+//             testing
+//         </p>
+//     </div>
+// );
 
-console.log('app.js is running');
-console.log(square(5));
-console.log(add(3, 8));
-console.log(subtract(5, 2));
-
-console.log(isAdult(17));
-console.log(isAdult(19));
-
-console.log(canDrink(20));
-console.log(canDrink(22));
-
-console.log(isSenior(64));
-console.log(isSenior(66));
+const template = React.createElement('p', {}, 'testing 123');
+ReactDOM.render(template, document.getElementById('app'));
