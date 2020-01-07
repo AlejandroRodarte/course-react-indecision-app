@@ -18,6 +18,8 @@ export default class AddOption extends React.Component {
         
         e.preventDefault();
 
+        console.log(testing);
+
         const option = e.target.elements.option.value.trim();
 
         // accessing the error (if exists, else undefined)
